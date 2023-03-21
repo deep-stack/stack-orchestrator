@@ -1,6 +1,14 @@
-FROM node:18.15.0-alpine3.16
+FROM ubuntu:22.04
 
-RUN apk --update --no-cache add make git
+RUN apt-get update \
+  && apt-get install -y curl gnupg build-essential \
+  && curl --silent --location https://deb.nodesource.com/setup_18.x | bash - \
+  && apt-get update \
+  && apt-get install -y nodejs git busybox \
+  && node -v
+
+RUN corepack enable \
+  && yarn --version
 
 WORKDIR /app
 
