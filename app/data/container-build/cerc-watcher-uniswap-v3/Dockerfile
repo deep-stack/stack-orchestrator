@@ -6,7 +6,6 @@ WORKDIR /app
 
 COPY . .
 
-# TODO: Use updated release
 RUN echo "Building uniswap-watcher-ts" && \
-    git checkout v0.3.4 && \
+    git checkout v0.3.5 && \
     yarn && yarn build && yarn build:contracts
