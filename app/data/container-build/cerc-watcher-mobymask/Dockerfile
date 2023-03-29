@@ -7,9 +7,8 @@ WORKDIR /app
 
 COPY . .
 
-# TODO: Use updated release
 RUN echo "Building watcher-ts" && \
-    git checkout v0.2.19 && \
+    git checkout v0.2.34 && \
     yarn && yarn build
 
 WORKDIR /app/packages/mobymask-watcher

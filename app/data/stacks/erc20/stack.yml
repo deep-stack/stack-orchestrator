@@ -3,10 +3,12 @@ name: erc20-watcher
 repos:
   - cerc-io/go-ethereum
   - cerc-io/ipld-eth-db
+  - dboreham/foundry
   - cerc-io/ipld-eth-server
   - cerc-io/watcher-ts
 containers:
   - cerc/go-ethereum
+  - cerc/foundry
   - cerc/go-ethereum-foundry
   - cerc/ipld-eth-db
   - cerc/ipld-eth-server
