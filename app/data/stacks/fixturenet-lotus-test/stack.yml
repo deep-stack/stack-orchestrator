@@ -1,0 +1,12 @@
+version: "1.0"
+name: fixturenet-lotus-test
+description: "A test for lotus fixturenet"
+repos:
+  - github.com/filecoin-project/lotus
+  - github.com/cerc-io/lotus-test@pm-add-tests
+containers:
+  - cerc/lotus
+  - cerc/lotus-test
+pods:
+  - fixturenet-lotus
+  - lotus-test

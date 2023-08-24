@@ -1,0 +1,29 @@
+version: '3.2'
+
+services:
+  # Service for running Lotus tests with Filecoin mainnet
+  lotus-test-filecoin:
+    image: cerc/lotus-test:local
+    restart: unless-stopped
+    environment:
+      ETH_RPC_ENDPOINT: https://archive.lotus.vdb.to/rpc/v1
+      CONTRACT: 0x7B90337f65fAA2B2B8ed583ba1Ba6EB0C9D7eA44
+      TRANSFER_BLOCK: 3148459
+      FROM_ADDRESS: 0x0000000000000000000000000000000000000000
+      TO_ADDRESS: 0x68246A0dBDE7b7D84d977a377df3CDA986103D75
+    command: "yarn test"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Service for running Lotus tests with fixturenet-lotus
+  lotus-test-fixturenet:
+    image: cerc/lotus-test:local
+    restart: unless-stopped
+    depends_on:
+      lotus-node-1:
+        condition: service_healthy
+    environment:
+      ETH_RPC_ENDPOINT: http://lotus-node-1:1234/rpc/v1
+    command: "./deploy-and-test-fixturenet.sh"
+    volumes:
+      - ../config/lotus-test/deploy-and-test-fixturenet.sh:/deploy-and-test-fixturenet.sh
