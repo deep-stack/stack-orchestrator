@@ -9,3 +9,4 @@ COPY . .
 RUN echo "Installing dependencies" && \
   yarn
 
+RUN cd packages/nitro-rpc-client
