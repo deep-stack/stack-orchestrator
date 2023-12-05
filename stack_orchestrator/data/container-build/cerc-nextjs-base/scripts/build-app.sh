@@ -107,7 +107,12 @@ if [ "$CERC_NEXT_VERSION" != "keep" ] && [ "$CUR_NEXT_VERSION" != "$CERC_NEXT_VE
   cat package.json | jq ".dependencies.next = \"$CERC_NEXT_VERSION\"" | sponge package.json
 fi
 
-$CERC_BUILD_TOOL install || exit 1
+ls -l
+node --version
+echo echo $(pwd)
+echo $CERC_BUILD_TOOL
+echo "yarn install && yarn build"
+yarn install && yarn build || exit 1
 
 CUR_NEXT_VERSION=`jq -r '.version' node_modules/next/package.json`
 
@@ -132,6 +137,11 @@ EOF
   $CERC_BUILD_TOOL install || exit 1
 fi
 
-$CERC_BUILD_TOOL run cerc_compile || exit 1
-
+cd packages/web || exit 1
+echo "yarn generate"
+yarn generate
+echo "yarn version"
+yarn next --version
+echo "yarn next experimental-compile"
+yarn next experimental-compile
 exit 0
