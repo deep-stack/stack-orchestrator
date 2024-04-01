@@ -46,3 +46,6 @@ jobs:
         run: ./scripts/build_shiv_package.sh
       - name: "Run fixturenet-laconicd tests"
         run: ./tests/fixturenet-laconicd/run-test.sh
+      # TODO: Separate out in a job
+      - name: "Run laconic CLI tests"
+        run: ./tests/fixturenet-laconicd/run-cli-test.sh
