@@ -5,7 +5,7 @@ if [ -n "$CERC_SCRIPT_DEBUG" ]; then
   set -x
 fi
 
-echo "$(date +"%Y-%m-%d %T"): Running stack-orchestrator Laconicd fixturenet test"
+echo "$(date +"%Y-%m-%d %T"): Running stack-orchestrator Laconic registry CLI tests"
 env
 cat /etc/hosts
 # Bit of a hack, test the most recent package
@@ -22,13 +22,15 @@ $TEST_TARGET_SO --stack fixturenet-laconicd deploy --cluster laconicd ps
 laconicd_account_address=$(docker exec laconicd-laconicd-1 laconicd keys list | awk '/- address:/ {print $3}')
 
 # Copy over config
-docker exec -it laconicd-cli-1 cp config.yml laconic-registry-cli/
+docker exec laconicd-cli-1 cp config.yml laconic-registry-cli/
 
 # Wait for the laconid endpoint to come up
+echo "Waiting for the RPC endpoint to come up"
 docker exec laconicd-laconicd-1 sh -c "curl --retry 10 --retry-delay 3 --retry-connrefused http://127.0.0.1:9473/api"
 
 # Run the tests
-docker exec -it -e TEST_ACCOUNT=$laconicd_account_address laconicd-cli-1 sh -c 'cd laconic-registry-cli && yarn test'
+echo "Running the tests"
+docker exec -e TEST_ACCOUNT=$laconicd_account_address laconicd-cli-1 sh -c 'cd laconic-registry-cli && yarn test'
 
 # Clean up
 $TEST_TARGET_SO --stack fixturenet-laconicd deploy --cluster laconicd down --delete-volumes
