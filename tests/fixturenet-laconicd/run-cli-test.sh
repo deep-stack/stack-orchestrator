@@ -12,7 +12,7 @@ cat /etc/hosts
 TEST_TARGET_SO=$( ls -t1 ./package/laconic-so* | head -1 )
 
 echo "$(date +"%Y-%m-%d %T"): Starting stack"
-TEST_AUCTION_ENABLED=true $TEST_TARGET_SO --stack fixturenet-laconicd deploy --cluster laconicd up
+TEST_AUCTION_ENABLED=true BASE_DIR=~/cerc $TEST_TARGET_SO --stack fixturenet-laconicd deploy --cluster laconicd up
 echo "$(date +"%Y-%m-%d %T"): Stack started"
 
 # Verify that the fixturenet is up and running
@@ -30,7 +30,7 @@ docker exec laconicd-laconicd-1 sh -c "curl --retry 10 --retry-delay 3 --retry-c
 
 # Run the tests
 echo "Running the tests"
-docker exec -e TEST_ACCOUNT=$laconicd_account_address laconicd-cli-1 sh -c 'cd laconic-registry-cli && yarn test'
+docker exec -e TEST_ACCOUNT=$laconicd_account_address laconicd-cli-1 sh -c 'cd laconic-registry-cli && yarn && yarn test'
 
 # Clean up
 $TEST_TARGET_SO --stack fixturenet-laconicd deploy --cluster laconicd down --delete-volumes

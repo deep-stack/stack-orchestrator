@@ -52,10 +52,6 @@ RUN npm config set @cerc-io:registry ${CERC_NPM_REGISTRY_URL} \
 # Globally install the cli package
 RUN yarn global add @cerc-io/laconic-registry-cli
 
-# Clone the repo for running CLI tests inside the container
-RUN git clone https://git.vdb.to/cerc-io/laconic-registry-cli.git \
-    && cd laconic-registry-cli && yarn
-
 # Add scripts
 RUN mkdir /scripts
 RUN mkdir /scripts/demo-records

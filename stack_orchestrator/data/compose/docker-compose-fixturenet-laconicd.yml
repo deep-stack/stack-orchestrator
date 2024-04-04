@@ -28,6 +28,7 @@ services:
     image: cerc/laconic-registry-cli:local
     volumes:
       - ../config/fixturenet-laconicd/registry-cli-config-template.yml:/registry-cli-config-template.yml
+      - ${BASE_DIR}/laconic-registry-cli:/laconic-registry-cli
 
 volumes:
   laconicd-data:
